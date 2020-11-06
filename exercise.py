@@ -1,5 +1,5 @@
 """
-Personal practice on python
+https://github.com/cwchong/coursework/blob/main/201106/Combination_Exercises.ipynb
 """
 import random, string
 
