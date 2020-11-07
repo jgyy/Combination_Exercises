@@ -187,7 +187,10 @@ def question_seven_a():
             break
         print("")
 
-    print(score_dict)
+    print("Input:", score_dict)
+    print()
+    print("Output: ", end="")
+    ratings_by_percent(score_dict)
 
 
 def fico(score_dict):
@@ -226,8 +229,26 @@ def fico(score_dict):
     
     # update the dictionary of entries
     score_dict[name] = score
-    
     return True
+
+
+def ratings_by_percent(score_dict):
+    """
+    You are now tasked to create a function ratingsByPercent. It takes the
+    dictionary of entries as input and prints the various rankings as a percentage.
+    """
+    length = len(score_dict)
+    rate = {
+        "very_poor": lambda x: 300 <= x <= 579,
+        "fair": lambda x: 580 <= x <= 669,
+        "good": lambda x: 670 <= x <= 739,
+        "very_good": lambda x: 740 <= x <= 799,
+        "exceptional": lambda x: 800 <= x <= 850,
+    }
+    ratings = {j: [i for i in score_dict.values() if rate[j](i)] for j in rate}
+    rate_percent = {i: str(round((len(j) / length) * 100, 2)) + "%" for i, j in ratings.items()}
+    print(rate_percent)
+    print()
 
 
 if __name__ == "__main__":
