@@ -20,7 +20,7 @@ def question_one(strs):
         print(f"Output: {sorted_letters}{sorted_numbers}")
         print("")
     except TypeError as err:
-        print(err, "; Skipping to question 2.")
+        print(err, "; Skipping to the second question.")
 
 
 def question_two(strs):
@@ -60,7 +60,7 @@ def question_three(strs):
         print(f"No. of Lower case characters: {upper_count}")
         print("")
     except TypeError as err:
-        print(err, "; Skipping to the next question.")
+        print(err, "; Skipping to the fourth question.")
 
 
 def question_four(strs):
@@ -93,6 +93,22 @@ def question_four(strs):
         return str(err) + "; Skipping to the next question."
 
 
+def question_five(strs):
+    """
+    Using a single list comprehension and lambda functions apply the math
+    functions $ f(x) = x+x $ and $ g(x) = x*x $ to a list of numbers.
+    """
+    try:
+        response = "Question 5 Answers:\n"
+        fx = lambda x: 2 * x
+        gx = lambda x: x ** 2
+        output = [fx(x) for x in strs] + [gx(x) for x in strs]
+        return response + "Input: " + str(strs) + "\nOutput: " + str(output) + "\n"
+
+    except TypeError as err:
+        return str(err) + "; Skipping to the next question."
+
+
 if __name__ == "__main__":
     length_1 = random.randint(1, 99)
     letter_1 = string.ascii_lowercase + string.ascii_uppercase + string.digits
@@ -115,5 +131,7 @@ if __name__ == "__main__":
     cube_list = [cube(r) for r in range_2]
     rand_list = [random.randint(-99, 99) for _ in range_2]
     lists = random.choice([line_list, quad_list, cube_list, rand_list])
-    result = question_four(lists)
-    print(result)
+    result_4 = question_four(lists)
+    print(result_4)
+    result_5 = question_five(lists)
+    print(result_5)
