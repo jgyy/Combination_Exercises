@@ -18,7 +18,7 @@ def question_one(strs):
         print("Question 1 Answers:")
         print(f"Input: {strs}")
         print(f"Output: {sorted_letters}{sorted_numbers}")
-        print("")
+        print()
     except TypeError as err:
         print(err, "; Skipping to the second question.")
 
@@ -37,7 +37,7 @@ def question_two(strs):
         print(f"Input: {strs}")
         print("Filtered Output:", letters)
         print(f"String Count: {letters_count}")
-        print("")
+        print()
     except TypeError as err:
         print(err, "; Skipping to the third question.")
 
@@ -58,7 +58,7 @@ def question_three(strs):
         print(f"Original String: {strs}")
         print(f"No. of Upper case characters: {lower_count}")
         print(f"No. of Lower case characters: {upper_count}")
-        print("")
+        print()
     except TypeError as err:
         print(err, "; Skipping to the fourth question.")
 
@@ -90,7 +90,7 @@ def question_four(strs):
             return response + "Not part of the sequence: " + str(strs) + "\n"
 
     except TypeError as err:
-        return str(err) + "; Skipping to the next question."
+        return str(err) + "; Skipping to the fifth question."
 
 
 def question_five(strs):
@@ -109,29 +109,156 @@ def question_five(strs):
         return str(err) + "; Skipping to the next question."
 
 
+def question_six():
+    """
+    The following codes loops the contents of a 2D list in a the direction from left to
+    right but there are errors. Correct the errors to produce the following output.
+    """
+    b = (0,0,0)
+    w = (255,255,255)
+
+    right_arrow = [
+        [b,b,b,w,b,b,b,b],
+        [b,b,b,b,w,b,b,b],
+        [b,b,b,b,b,w,b,b],
+        [b,w,w,w,w,w,w,b],
+        [b,w,w,w,w,w,w,b],
+        [b,b,b,b,b,w,b,b],
+        [b,b,b,b,w,b,b,b],
+        [b,b,b,w,b,b,b,b],
+    ]
+    print("Question 6 Answer:\n")
+    # each step of this for loop is a slice of animation for the arrow
+    # use it to check that your arrow is moving in the right direction
+    for i in range(0,8):
+        # print the arrow
+        number = str(i + 1)
+        print(f"Slice Number {number}:\n")
+        print_8x8(right_arrow)
+        # compute the arrow's next step
+        right_arrow = right(right_arrow)
+        print()
+
+
+def right(board):
+    '''
+    Function to move the contents in the matrix to the right
+    '''
+    b = (0,0,0)
+    # init 2d array
+    temp = [[b for _ in range(8)] for _ in range(8)]
+    
+    # swapping the last column with the first column 
+    for j in range(8):
+        temp[j][0] = board[j][-1]
+    
+    # copying the rest of the contents back
+    for col in range(1,8):
+        for row in range(8):
+            temp[row][col] = board[row][col-1]
+
+    return temp
+
+def print_8x8(board):
+    '''
+    Function to print the matrix
+    '''
+    b = (0,0,0)
+    for row in board:
+        for col in row:
+            if col == b:
+                print(' -', end="")
+            else:
+                print(' *', end="")
+        print()
+
+
+def question_seven_a():
+    """
+    FICO® Score is one of the most well-known types of credit score in the industry.
+    FICO® Scores are used by many lenders, and credit scores range from 300 to 850.
+    """
+    print("Question 7 Answers:\n")
+    # main test driver (Do not change this cell)
+    score_dict = {'Alex': 800, 'Bob':640, 'Charlie': 500}
+
+    while True:
+        if not fico(score_dict):
+            break
+        print("")
+
+    print(score_dict)
+
+
+def fico(score_dict):
+    
+    # get name input
+    name = input("Enter entry's name (or enter 'q' to quit): ")
+    
+    # quit condition
+    if name in ['q', 'Q', 'quit', 'Quit']:
+        print("Bye Bye!")
+        return False
+    
+    # get score input
+    try:
+        score = int(input("Enter entry's credit score: "))
+    except ValueError:
+        print("Invalid Credit Score")
+        return False
+    
+    # check if score is valid
+    if score < 300 or score > 850 :
+        print("Invalid Credit Score")
+        return False
+    
+    # rating logic
+    if score >= 800:
+        print(name, "has an Exceptional credit score")
+    elif score >= 740:
+        print(name, "has a Very Good credit score")
+    elif score >= 670:
+        print(name, "has a Good credit score")
+    elif score >= 580:
+        print(name, "has a Fair credit score")
+    else:
+        print(name, "has a Very Poor credit score")
+    
+    # update the dictionary of entries
+    score_dict[name] = score
+    
+    return True
+
+
 if __name__ == "__main__":
-    length_1 = random.randint(1, 99)
-    letter_1 = string.ascii_lowercase + string.ascii_uppercase + string.digits
-    result_1 = ''.join(random.choice(letter_1) for _ in range(length_1))
-    question_one(result_1)
+    try:
+        length_1 = random.randint(1, 99)
+        letter_1 = string.ascii_lowercase + string.ascii_uppercase + string.digits
+        result_1 = ''.join(random.choice(letter_1) for _ in range(length_1))
+        question_one(result_1)
 
-    length_2 = random.randint(4, 16)
-    range_2 = list(range(length_2))
-    letter_2 = "ab"
-    result_2 = [''.join(random.choice(letter_2) for _ in range_2) for _ in range_2]
-    question_two(result_2)
-    question_three(result_1)
+        length_2 = random.randint(4, 16)
+        range_2 = list(range(length_2))
+        letter_2 = "ab"
+        result_2 = [''.join(random.choice(letter_2) for _ in range_2) for _ in range_2]
+        question_two(result_2)
+        question_three(result_1)
 
-    rand = [random.randint(-1, 1) for _ in range(4)]
-    line = lambda x: rand[1]*x + rand[0]
-    quad = lambda x: rand[2]*x**2 + rand[1]*x + rand[0]
-    cube = lambda x: rand[3]*x**3 + rand[2]*x**2 + rand[1]*x + rand[0]
-    line_list = [line(r) for r in range_2]
-    quad_list = [quad(r) for r in range_2]
-    cube_list = [cube(r) for r in range_2]
-    rand_list = [random.randint(-99, 99) for _ in range_2]
-    lists = random.choice([line_list, quad_list, cube_list, rand_list])
-    result_4 = question_four(lists)
-    print(result_4)
-    result_5 = question_five(lists)
-    print(result_5)
+        rand = [random.randint(-1, 1) for _ in range(4)]
+        line = lambda x: rand[1]*x + rand[0]
+        quad = lambda x: rand[2]*x**2 + rand[1]*x + rand[0]
+        cube = lambda x: rand[3]*x**3 + rand[2]*x**2 + rand[1]*x + rand[0]
+        line_list = [line(r) for r in range_2]
+        quad_list = [quad(r) for r in range_2]
+        cube_list = [cube(r) for r in range_2]
+        rand_list = [random.randint(-99, 99) for _ in range_2]
+        lists = random.choice([line_list, quad_list, cube_list, rand_list])
+
+        result_4 = question_four(lists)
+        print(result_4)
+        result_5 = question_five(lists)
+        print(result_5)
+        question_six()
+        question_seven_a()
+    except KeyboardInterrupt:
+        print("\nYou have choosed to exit the program\n")
