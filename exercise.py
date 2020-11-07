@@ -39,7 +39,7 @@ def question_two(strs):
         print(f"String Count: {letters_count}")
         print("")
     except TypeError as err:
-        print(err, "; Skipping to the next question.")
+        print(err, "; Skipping to the third question.")
 
 
 def question_three(strs):
@@ -63,14 +63,57 @@ def question_three(strs):
         print(err, "; Skipping to the next question.")
 
 
+def question_four(strs):
+    """
+    Write a function to check whether a sequence of numbers have a linear, quadratic
+    or cubic related number pattern and return a string stating which pattern it is.
+    If there is no related pattern, return Not part of the sequence.
+    """
+    try:
+        response = "Question 4 Answers:\n"
+        def sequences(seqs):
+            length = list(range(1, len(seqs)))
+            sequence = [seqs[s-1] - seqs[s] for s in length]
+            sequence_check = sum(sequence) / len(sequence) == sequence[0]
+            return sequence, sequence_check
+
+        linear_sequence, linear_check = sequences(strs)
+        if linear_check:
+            return response + "Linear Sequence: " + str(strs) + "\n"
+        quad_sequence, quad_check = sequences(linear_sequence)
+        if quad_check:
+            return response + "Quadratic Sequence: " + str(strs) + "\n"
+        _, cube_check = sequences(quad_sequence)
+        if cube_check:
+            return response + "Cubic Sequence: " + str(strs) + "\n"
+        else:
+            return response + "Not part of the sequence: " + str(strs) + "\n"
+
+    except TypeError as err:
+        return str(err) + "; Skipping to the next question."
+
+
 if __name__ == "__main__":
     length_1 = random.randint(1, 99)
     letter_1 = string.ascii_lowercase + string.ascii_uppercase + string.digits
     result_1 = ''.join(random.choice(letter_1) for _ in range(length_1))
     question_one(result_1)
 
-    length_2 = random.randint(1, 16)
+    length_2 = random.randint(4, 16)
+    range_2 = list(range(length_2))
     letter_2 = "ab"
-    result_2 = [''.join(random.choice(letter_2) for _ in range(length_2)) for _ in range(length_2)]
+    result_2 = [''.join(random.choice(letter_2) for _ in range_2) for _ in range_2]
     question_two(result_2)
     question_three(result_1)
+
+    rand = [random.randint(-1, 1) for _ in range(4)]
+    line = lambda x: rand[1]*x + rand[0]
+    quad = lambda x: rand[2]*x**2 + rand[1]*x + rand[0]
+    cube = lambda x: rand[3]*x**3 + rand[2]*x**2 + rand[1]*x + rand[0]
+    line_list = [line(r) for r in range_2]
+    quad_list = [quad(r) for r in range_2]
+    cube_list = [cube(r) for r in range_2]
+    rand_list = [random.randint(-99, 99) for _ in range_2]
+    lists = random.choice([line_list, quad_list, cube_list, rand_list])
+    result = question_four(lists)
+    print(result)
